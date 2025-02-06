@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        .task-s {
+            padding: 10px;
+            margin: 5px 0;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 300px;
+            margin-bottom: 20px; 
+        }
+
+        .container button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .container input,
+        .container select {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <label for="taskInput">Task:</label>
+        <input type="text" id="taskInput" placeholder="Enter task">
+        
+        <label for="prioritySelect">Tag:</label>
+        <select id="prioritySelect">
+            <option value="1">Important</option>
+            <option value="0">Not Important</option>
+        </select>
+
+        <button id="addTaskBtn">Add task</button>
+
+        <button id="showImportantBtn">Show only the important tasks</button>
+        <button id="showNotImportantBtn">Show the tasks that are not important</button>
+        <button id="showAllTasksBtn">Show all the tasks</button>
+    </div>
+
+    <section id="demo"></section>
+
+    <script>
+        let tasks = [
+            { description: "Task1", priority: 1 },
+            { description: "Task2", priority: 0 },
+            { description: "Task3", priority: 1 }
+        ];
+
+        function displayTasks(tasksToDisplay) {
+            let tasksContainer = document.getElementById("demo");
+            tasksContainer.innerHTML = "";
+            
+            tasksToDisplay.forEach(task => {
+                let taskDiv = document.createElement("div");
+                taskDiv.classList.add("task-s");
+                taskDiv.style.background = task.priority === 1 ? "red" : "gray";
+                taskDiv.textContent = task.description;
+                tasksContainer.appendChild(taskDiv);
+            });
+        }
+
+        document.getElementById("addTaskBtn").addEventListener("click", function() {
+            const taskInput = document.getElementById("taskInput").value.trim();
+            const prioritySelect = document.getElementById("prioritySelect").value;
+
+            if (taskInput) { 
+                tasks.push({ description: taskInput, priority: parseInt(prioritySelect) });
+                displayTasks(tasks);  
+                document.getElementById("taskInput").value = ""; 
+            }
+        });
+
+        document.getElementById("showImportantBtn").addEventListener("click", function() {
+            const importantTasks = tasks.filter(task => task.priority === 1);
+            displayTasks(importantTasks);
+        });
+
+        document.getElementById("showNotImportantBtn").addEventListener("click", function() {
+            const notImportantTasks = tasks.filter(task => task.priority === 0);
+            displayTasks(notImportantTasks);
+        });
+
+        document.getElementById("showAllTasksBtn").addEventListener("click", function() {
+            displayTasks(tasks);
+        });
+
+        displayTasks(tasks);
+    </script>
+</body>
+</html>
