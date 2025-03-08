@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise1</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div id="demo"></div>
+
+    <script>
+        let tasks = [
+            { description: "Task1", priority: 1 },
+            { description: "Task2", priority: 0 },
+            { description: "Task3", priority: 1 }
+        ];
+
+        function displayTasks(tasksToDisplay) {
+            let tasksContainer = document.getElementById("demo");
+            tasksContainer.innerHTML = "";
+            
+            tasksToDisplay.forEach(task => {
+                let taskDiv = document.createElement("div");
+                taskDiv.classList.add("task-s");
+                taskDiv.style.background = task.priority === 1 ? "red" : "gray";
+                taskDiv.textContent = task.description;
+                tasksContainer.appendChild(taskDiv);
+            });
+        }
+
+        displayTasks(tasks);
+    </script>
+</body>
+</html>

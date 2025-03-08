@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise2</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div class="container">
+        <input type="text" id="taskInput" placeholder="Enter task description">
+        <select id="prioritySelect">
+            <option value="1">High Priority</option>
+            <option value="0">Low Priority</option>
+        </select>
+        <button id="addTaskBtn">Add Task</button>
+    </div>
+
+    <div id="demo"></div>
+
+    <script>
+        let tasks = [
+            { description: "Task1", priority: 1 },
+            { description: "Task2", priority: 0 },
+            { description: "Task3", priority: 1 }
+        ];
+
+        function displayTasks(tasksToDisplay) {
+            let tasksContainer = document.getElementById("demo");
+            tasksContainer.innerHTML = "";
+            
+            tasksToDisplay.forEach(task => {
+                let taskDiv = document.createElement("div");
+                taskDiv.classList.add("task-s");
+                taskDiv.style.background = task.priority === 1 ? "red" : "gray";
+                taskDiv.textContent = task.description;
+                tasksContainer.appendChild(taskDiv);
+            });
+        }
+
+        document.getElementById("addTaskBtn").addEventListener("click", function() {
+            const taskInput = document.getElementById("taskInput").value.trim();
+            const prioritySelect = document.getElementById("prioritySelect").value;
+
+            if (taskInput) { 
+                tasks.push({ description: taskInput, priority: parseInt(prioritySelect) });
+                displayTasks(tasks);  
+                document.getElementById("taskInput").value = ""; 
+            }
+        });
+
+        displayTasks(tasks);
+    </script>
+
+</body>
+</html>
